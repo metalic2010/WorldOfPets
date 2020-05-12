@@ -34,8 +34,8 @@ namespace WorldOfPets.Controllers
             // создаем объект ClaimsIdentity
             ClaimsIdentity id = new ClaimsIdentity(claims
                                                   , "ApplicationCookie"
-                                                  , ClaimTypes.Name
-                                                  , ClaimTypes.Role);
+                                                  , ClaimsIdentity.DefaultNameClaimType
+                                                  , ClaimsIdentity.DefaultRoleClaimType);
 
             var authProperties = new AuthenticationProperties
             {
@@ -60,6 +60,7 @@ namespace WorldOfPets.Controllers
                                          , authProperties);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Logon([Required(ErrorMessage = "Не указан Email")]
                                                string Login
                                               , [Required(ErrorMessage = "Не указан пароль")]
@@ -80,6 +81,20 @@ namespace WorldOfPets.Controllers
 
             // если пользователя не найдено
             return NotFound();
+        }
+
+        /// <summary>
+        /// API выход из сессии
+        /// Пример: api/auth/logout
+        /// </summary>
+        /// <returns>
+        /// Перенаправляет на страницу входа (Login/Account)
+        /// </returns>
+        [HttpGet("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Account");
         }
     }
 }

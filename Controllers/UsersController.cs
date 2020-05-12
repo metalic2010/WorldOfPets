@@ -28,6 +28,15 @@ namespace WorldOfPets.Controllers
             return new ObjectResult(user);
         }
 
+        [HttpGet("friend")]
+        public async Task<ActionResult<InfoUsers>> GetFriend(string login)
+        {
+            InfoUsers user = await db.Info_Users.FirstOrDefaultAsync(x => x.Login.ToUpper() == login.ToUpper());
+            if (user == null)
+                return NotFound();
+            return new ObjectResult(user);
+        }
+
         // POST api/users
         [HttpPost]
         public async Task<ActionResult<InfoUsers>> Post(InfoUsers user)
