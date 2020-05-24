@@ -15,12 +15,27 @@ namespace WorldOfPets.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        /// <summary>
+        /// Инициализируем подключение к БД
+        /// </summary>
         UsersContext db;
 
+        /// <summary>
+        /// Присваеваем контекст подключения для дальнейшего использования
+        /// </summary>
+        /// <param name="context">Принимает контекст подключения</param>
         public AuthController(UsersContext context)
         {
             db = context;
         }
+
+        /// <summary>
+        /// Аутентификация пользователя, создание авторизационной куки
+        /// </summary>
+        /// <param name="userAuth">
+        /// Принимает информацию о пользователе для создания куки
+        /// </param>
+        /// <returns>Возвращают информацию куки в клиент</returns>
         private async Task Authenticate(InfoAuth userAuth)
         {
             // создаем один claim
@@ -60,10 +75,17 @@ namespace WorldOfPets.Controllers
                                          , authProperties);
         }
 
+        /// <summary>
+        /// Принимает данные из формы авторизации и авторизует пользователя
+        /// если тот существует в БД и активен (т.е. не удалён и не заблокирован)
+        /// </summary>
+        /// <param name="Login">Принимает логин</param>
+        /// <param name="Pass">Принимает пароль</param>
+        /// <returns>Возвращает в клиент ответ от сервера</returns>
         [HttpGet]
-        public async Task<IActionResult> Logon([Required(ErrorMessage = "Не указан Email")]
+        public async Task<IActionResult> Logon([Required(ErrorMessage = "Не указан логин")]
                                                string Login
-                                              , [Required(ErrorMessage = "Не указан пароль")]
+                                             , [Required(ErrorMessage = "Не указан пароль")]
                                                [DataType(DataType.Password)]
                                                string Pass)
         {

@@ -28,10 +28,18 @@ namespace WorldOfPets.Controllers
             return new ObjectResult(user);
         }
 
+        /// <summary>
+        /// Получение информации о друзьях
+        /// api/users/friend
+        /// </summary>
+        /// <param name="login">
+        /// Принимает логин авторизованного пользователя
+        /// </param>
+        /// <returns>Возвращает список друзей</returns>
         [HttpGet("friend")]
-        public async Task<ActionResult<InfoUsers>> GetFriend(string login)
+        public async Task<ActionResult<InfoUsers>> GetFriend()
         {
-            InfoUsers user = await db.Info_Users.FirstOrDefaultAsync(x => x.Login.ToUpper() == login.ToUpper());
+            InfoUsers user = await db.Info_Users.FirstOrDefaultAsync(x => x.Login.ToUpper() == User.Identity.Name.ToUpper());
             if (user == null)
                 return NotFound();
             return new ObjectResult(user);
@@ -59,7 +67,7 @@ namespace WorldOfPets.Controllers
             {
                 return BadRequest();
             }
-            if (!db.Info_Users.Any(x => x.ID_USER == user.ID_USER))
+            if (!db.Info_Users.Any(x => x.Login == user.Login))
             {
                 return NotFound();
             }
@@ -70,10 +78,10 @@ namespace WorldOfPets.Controllers
         }
 
         // DELETE api/users/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<InfoUsers>> Delete(int id)
+        [HttpDelete("{Login}")]
+        public async Task<ActionResult<InfoUsers>> Delete(string Login)
         {
-            InfoUsers user = db.Info_Users.FirstOrDefault(x => x.ID_USER == id);
+            InfoUsers user = db.Info_Users.FirstOrDefault(x => x.Login == Login);
             if (user == null)
             {
                 return NotFound();

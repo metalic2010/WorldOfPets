@@ -6,6 +6,7 @@ namespace WorldOfPets.Models
     {
         public DbSet<InfoUsers> Info_Users { get; set; }
         public DbSet<InfoAuth> Info_Auth { get; set; }
+        public DbSet<InfoReg> Info_Reg { get; set; }
         public UsersContext(DbContextOptions<UsersContext> options)
             : base(options)
         {

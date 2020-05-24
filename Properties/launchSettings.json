@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/auth?Login=metalic2010&Pass=12October1991",
+      "launchUrl": "api/auth?Login=metalic2010&Pass=Test2010",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

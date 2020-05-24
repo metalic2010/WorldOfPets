@@ -6,7 +6,6 @@ namespace WorldOfPets.Models
     public class InfoUsers
     {
         [Key]
-        public Int64 ID_USER { get; set; }
         public string Login { get; set; }
         public Byte STATUS { get; set; }
         public string LastName { get; set; }
@@ -30,5 +29,11 @@ namespace WorldOfPets.Models
         [Key]
         public string Login { get; set; }
         public string RoleName { get; set; }
+    }
+
+    public class InfoReg
+    {
+        [Key]
+        public string ResultRequest { get; set; }
     }
 }
